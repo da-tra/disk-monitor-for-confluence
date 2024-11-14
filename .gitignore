@@ -4,3 +4,4 @@ credentials.py
 scratchpad.py
 table.html
 __pycache__/
+configuration.py
