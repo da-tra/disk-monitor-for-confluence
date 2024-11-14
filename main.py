@@ -8,23 +8,25 @@ import configuration
 from pprint import pprint
 
 def check_disk_usage(path: str) -> dict:
+    """Use package shutil to extract information about storage of a mounted drive."""
     disk_dict = dict()
-    total, used, free = shutil.disk_usage(path)
-    total_gb = total / 2**30
-    used_percent = used / total * 100
-    free_gb = free / 2**30
+    _total, _used, _free = shutil.disk_usage(path)
+    total_gb = _total / 2**30
+    used_percent = _used / _total * 100
+    free_gb = _free / 2**30
 
-    disk_dict["used %"] = used_percent
-    disk_dict["free GB"] = free_gb
-    disk_dict["total GB"] = total_gb
+    disk_dict = {
+        "used %": used_percent,
+        "free GB": free_gb,
+        "total GB": total_gb,
+        }
     return disk_dict
 
 def update_disks_list(
     disk_paths: list = configuration.drive_paths,
     disk_registry: list = disks,
-):
+    ) -> None:
     """Create a dictionary for each storage device and add it to the disk register ."""
-
     for disk_path in disk_paths:
         disk_dict = {}
         disk_dict["path"] = disk_path
