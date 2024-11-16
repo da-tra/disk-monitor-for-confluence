@@ -37,54 +37,59 @@ def create_disks_list(
         disks.append(disk_dict)
     return disks
 
+def create_table_html(drives: list[dict]) -> str:
+    """Create HTML code for a table that displays the information of all disks in a list. 
+    Column labels are the keys in the dictionaries of each individual storage device."""
+    ## create HTML code for a table with disc info
+    # define an empty table
+    table = ""
+
+    # define labels for the columns
+    # get the labels from one of the disks' dictionary
+    table_columns = disks[1].keys()
+
+    # create first table row with table column labels
+    table += "<tr>"
+    for column_name in table_columns:
+        table += "<th><p><strong>"
+        table += column_name
+        table += "</strong></p></th>"
+    table += "</tr>"
+
+    # create rows for each drive and its data
+    for disk in disks:
+        new_row = ""
+        # start row
+        new_row += "<tr>"
+        # add disk path
+        new_row += f"<td><p>{disk["path"]}</p></tc>"
+        # open storage cell and fill it
+        new_row += f"<td> <p>"
+        new_row += f"used: {"{:.1f}".format(disk["storage"]["used %"])} % <br>"
+        new_row += f"free: {"{:.2f}".format(disk["storage"]["free GB"])} GB <br>"
+        new_row += f"free: {"{:.2f}".format(disk["storage"]["total GB"])} GB <br>"
+        # close storage cell
+        new_row += f"</p></td>"
+        # TODO add time stamp of update
+        # new cell for timestamp
+        new_row += f"<td> <p>{disk["time of snapshot"]}</p></td>"
+        # finish this row
+        new_row += "</tr>"
+        table += new_row
+
+    print(table)
+    # create rows for each drive and its data
+
+    # assemble the table
+    table = f'<table data-table-width="760" data-layout="default" ac:local-id="553374a3-9b8a-48d8-8252-c8c8c575bf2c"><tbody>{table}</tbody></table>'
+    return table
+
 # create and populate a list that stores the information about all the drives
 disks = create_disks_list()
 pprint(disks)
 
-## create HTML code for a table with disc info
-# define an empty table
-table = ""
-# define labels for the columns
-table_columns = [
-        "path",
-        "storage",
-        "time of snapshot",
-        ]
-# create first row with table column labels
-table += "<tr>"
-for column_name in table_columns:
-    table += "<th><p><strong>"
-    table += column_name
-    table += "</strong></p></th>"
-table += "</tr>"
-
-
-# create rows for each drive and its data
-for disk in disks:
-    new_row = ""
-    # start row
-    new_row += "<tr>"
-    # add disk path
-    new_row += f"<td><p>{disk["path"]}</p></tc>"
-    # open storage cell and fill it
-    new_row += f"<td> <p>"
-    new_row += f"used %: {"{:.1f}".format(disk["storage"]["used %"])} | "
-    new_row += f"free: {"{:.2f}".format(disk["storage"]["free GB"])} | "
-    new_row += f"free: {"{:.2f}".format(disk["storage"]["total GB"])} | "
-    # close storage cell
-    new_row += f"</p></td>"
-    # TODO add time stamp of update
-    # new cell for timestamp
-    new_row += f"<td> <p>{disk["time of snapshot"]}</p></td>"
-    # finish this row
-    new_row += "</tr>"
-    table += new_row
-
-print(table)
-# create rows for each drive and its data
-
-# assemble the table
-table = f'<table data-table-width="760" data-layout="default" ac:local-id="553374a3-9b8a-48d8-8252-c8c8c575bf2c"><tbody>{table}</tbody></table>'
+# create an HTML table displaying information about the drives
+table = create_table_html(disks)
 
 # create HTML file with table for debugging
 path = Path("table.html")
