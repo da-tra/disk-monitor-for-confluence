@@ -15,29 +15,28 @@ def check_disk_usage(path: str) -> dict:
     used_percent = _used / _total * 100
     free_gb = _free / 2**30
 
-    disk_dict = {
+    return {
         "used %": used_percent,
         "free GB": free_gb,
         "total GB": total_gb,
         }
-    return disk_dict
 
 def update_disks_list(
+    disk_register: list,
     disk_paths: list = configuration.drive_paths,
-    disk_registry: list = disks,
     ) -> None:
     """Create a dictionary for each storage device and add it to the disk register ."""
     for disk_path in disk_paths:
         disk_dict = {}
         disk_dict["path"] = disk_path
         disk_dict["storage"] = check_disk_usage(disk_path)
-        disk_registry.append(disk_dict)
+        disk_register.append(disk_dict)
 
 # create a list where you can save the information about all the drives
 disks = []
 
 # update the list 'disks' with information about all drives (stored in dictionaries)
-update_disks_list(disk_paths=disks)
+update_disks_list(disk_register=disks)
 
 
 print("{:.2f}".format(disks[0]["storage"]["used %"]))
