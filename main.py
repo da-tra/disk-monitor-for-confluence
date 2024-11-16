@@ -57,6 +57,27 @@ for column_name in table_columns:
     table += column_name
     table += "</strong></p></th>"
 table += "</tr>"
+
+
+# create rows for each drive and its data
+for disk in disks:
+    new_row = ""
+    # start row
+    new_row += "<tr>"
+    # add disk path
+    new_row += f"<td><p>{disk["path"]}</p></tc>"
+    # open storage cell and fill it
+    new_row += f"<td> <p>"
+    new_row += f"used %: {"{:.1f}".format(disk["storage"]["used %"])} | "
+    new_row += f"free: {"{:.2f}".format(disk["storage"]["free GB"])} | "
+    new_row += f"free: {"{:.2f}".format(disk["storage"]["total GB"])} | "
+    # close storage cell
+    new_row += f"</p></td>"
+    # TODO add time stamp of update
+    # finish this row
+    new_row += "</tr>"
+    table += new_row
+
 print(table)
 # create rows for each drive and its data
 
