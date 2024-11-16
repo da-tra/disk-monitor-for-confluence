@@ -1,11 +1,10 @@
-"""
-Gets data about free storage on mounted drives and HTTP PUTs them on an 
-existing Confluence page inside a generated table.
-"""
+"""Gets data about free storage on mounted drives and HTTP PUTs them on an existing Confluence page inside a generated table."""
 
 import shutil
-import configuration
 from pprint import pprint
+
+import configuration
+
 
 def check_disk_usage(path: str) -> dict:
     """Use package shutil to extract information about storage of a mounted drive."""
@@ -35,8 +34,12 @@ def create_disks_list(
 
 # create and populate a list that stores the information about all the drives
 disks = create_disks_list()
-print(disks)
+pprint(disks)
 
+#TODO create HTML code for a table with disc info
+#TODO create Requests PUT request for updating a given confluence page
+#TODO implement logging
+#TODO implement SQL recording of storage device status
 
 
 print("{:.2f}".format(disks[0]["storage"]["used %"]))
