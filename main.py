@@ -21,22 +21,22 @@ def check_disk_usage(path: str) -> dict:
         "total GB": total_gb,
         }
 
-def update_disks_list(
-    disk_register: list,
+def create_disks_list(
     disk_paths: list = configuration.drive_paths,
-    ) -> None:
-    """Create a dictionary for each storage device and add it to the disk register ."""
+    ) -> list[dict]:
+    """Create a list for storing info about all the disks. Then populate it with information about all the disks' storage."""
+    disks = []
     for disk_path in disk_paths:
         disk_dict = {}
         disk_dict["path"] = disk_path
         disk_dict["storage"] = check_disk_usage(disk_path)
-        disk_register.append(disk_dict)
+        disks.append(disk_dict)
+    return disks
 
-# create a list where you can save the information about all the drives
-disks = []
+# create and populate a list that stores the information about all the drives
+disks = create_disks_list()
+print(disks)
 
-# update the list 'disks' with information about all drives (stored in dictionaries)
-update_disks_list(disk_register=disks)
 
 
 print("{:.2f}".format(disks[0]["storage"]["used %"]))
