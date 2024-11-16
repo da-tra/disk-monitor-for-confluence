@@ -74,6 +74,8 @@ for disk in disks:
     # close storage cell
     new_row += f"</p></td>"
     # TODO add time stamp of update
+    # new cell for timestamp
+    new_row += f"<td> <p>{disk["time of snapshot"]}</p></td>"
     # finish this row
     new_row += "</tr>"
     table += new_row
