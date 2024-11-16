@@ -38,9 +38,26 @@ def create_disks_list(
 
 # create and populate a list that stores the information about all the drives
 disks = create_disks_list()
-pprint(disks)
+# pprint(disks)
 
 ## create HTML code for a table with disc info
+# define an empty table
+table = ""
+# define labels for the columns
+table_columns = [
+        "path",
+        "storage",
+        "time of snapshot",
+        ]
+# create first row with table column labels
+table += "<tr>"
+for column_name in table_columns:
+    table += "<th><p><strong>"
+    table += column_name
+    table += "</strong></p></th>"
+table += "</tr>"
+print(table)
+# create rows for each drive and its data
 
 
 #TODO create Requests PUT request for updating a given confluence page
