@@ -84,6 +84,14 @@ def create_table_html(drives: list[dict]) -> str:
     table = f'<table data-table-width="760" data-layout="default" ac:local-id="553374a3-9b8a-48d8-8252-c8c8c575bf2c"><tbody>{table}</tbody></table>'
     return table
 
+# import information about your Confluence page from the file configuration.py
+CONFLUENCE_PAGE_ID = configuration.confluence_page_id
+BASE_URL = configuration.confluence_base_url
+URL = f"{BASE_URL}wiki/api/v2/pages/{CONFLUENCE_PAGE_ID}"
+CONFLUENCE_USER = configuration.confluence_username
+CONFLUENCE_API_TOKEN = configuration.api_key
+CONFLUENCE_PAGE_TITLE = configuration.confluence_page_name
+
 # create and populate a list that stores the information about all the drives
 disks = create_disks_list()
 pprint(disks)
@@ -96,6 +104,7 @@ path = Path("table.html")
 path.write_text(table)
 
 #TODO create Requests PUT request for updating a given confluence page
+
 #TODO implement logging
 #TODO implement SQL recording of storage device status
 
