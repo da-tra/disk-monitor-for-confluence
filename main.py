@@ -61,6 +61,9 @@ print(table)
 # create rows for each drive and its data
 
 # create HTML file with table for debugging
+# assemble the table
+table = f'<table data-table-width="760" data-layout="default" ac:local-id="553374a3-9b8a-48d8-8252-c8c8c575bf2c"><tbody>{table}</tbody></table>'
+
 path = Path("table.html")
 path.write_text(table)
 
