@@ -2,6 +2,7 @@
 
 import shutil
 from datetime import datetime, timezone
+from pathlib import Path
 from pprint import pprint
 
 import configuration
@@ -38,7 +39,7 @@ def create_disks_list(
 
 # create and populate a list that stores the information about all the drives
 disks = create_disks_list()
-# pprint(disks)
+pprint(disks)
 
 ## create HTML code for a table with disc info
 # define an empty table
@@ -59,6 +60,9 @@ table += "</tr>"
 print(table)
 # create rows for each drive and its data
 
+# create HTML file with table for debugging
+path = Path("table.html")
+path.write_text(table)
 
 #TODO create Requests PUT request for updating a given confluence page
 #TODO implement logging
