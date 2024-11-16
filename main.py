@@ -1,6 +1,7 @@
 """Gets data about free storage on mounted drives and HTTP PUTs them on an existing Confluence page inside a generated table."""
 
 import shutil
+from datetime import datetime, timezone
 from pprint import pprint
 
 import configuration
@@ -23,12 +24,15 @@ def check_disk_usage(path: str) -> dict:
 def create_disks_list(
     disk_paths: list = configuration.drive_paths,
     ) -> list[dict]:
-    """Create a list for storing info about all the disks. Then populate it with information about all the disks' storage."""
+    """Create a list for storing info about all the disks. 
+    Then populate it with information about all the disks' storage, including time of recording."""
     disks = []
+    time_of_snapshot = datetime.now(timezone.utc).strftime("%d-%m-%Y %H:%M:%S")
     for disk_path in disk_paths:
         disk_dict = {}
         disk_dict["path"] = disk_path
         disk_dict["storage"] = check_disk_usage(disk_path)
+        disk_dict["time of snapshot"] = time_of_snapshot
         disks.append(disk_dict)
     return disks
 
@@ -36,7 +40,9 @@ def create_disks_list(
 disks = create_disks_list()
 pprint(disks)
 
-#TODO create HTML code for a table with disc info
+## create HTML code for a table with disc info
+
+
 #TODO create Requests PUT request for updating a given confluence page
 #TODO implement logging
 #TODO implement SQL recording of storage device status
