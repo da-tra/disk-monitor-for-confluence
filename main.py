@@ -1,9 +1,14 @@
 """Gets data about free storage on mounted drives and HTTP PUTs them on an existing Confluence page inside a generated table."""
 
+import json
 import shutil
+
 from datetime import datetime, timezone
 from pathlib import Path
 from pprint import pprint
+
+import requests
+from requests.auth import HTTPBasicAuth
 
 import configuration
 
@@ -62,27 +67,102 @@ def create_table_html(drives: list[dict]) -> str:
         # start row
         new_row += "<tr>"
         # add disk path
-        new_row += f"<td><p>{disk["path"]}</p></tc>"
+        new_row += f"<td><p>{disk["path"]}</p></td>"
         # open storage cell and fill it
-        new_row += f"<td> <p>"
-        new_row += f"used: {"{:.1f}".format(disk["storage"]["used %"])} % <br>"
-        new_row += f"free: {"{:.2f}".format(disk["storage"]["free GB"])} GB <br>"
-        new_row += f"free: {"{:.2f}".format(disk["storage"]["total GB"])} GB <br>"
+        new_row += "<td><p>"
+        new_row += f"<strong>used: {"{:.1f}".format(disk["storage"]["used %"])} % </strong> <br/>"
+        new_row += f"free: {"{:.2f}".format(disk["storage"]["free GB"])} GB<br/>"
+        new_row += f"total: {"{:.2f}".format(disk["storage"]["total GB"])} GB<br/>"
         # close storage cell
-        new_row += f"</p></td>"
+        new_row += "</p></td>"
         # TODO add time stamp of update
         # new cell for timestamp
         new_row += f"<td> <p>{disk["time of snapshot"]}</p></td>"
         # finish this row
         new_row += "</tr>"
         table += new_row
-
-    print(table)
-    # create rows for each drive and its data
-
     # assemble the table
-    table = f'<table data-table-width="760" data-layout="default" ac:local-id="553374a3-9b8a-48d8-8252-c8c8c575bf2c"><tbody>{table}</tbody></table>'
-    return table
+    return f"<table><tbody>{table}</tbody></table>"
+
+def get_page_version(url: str) -> int:
+    
+    """Get version number of confluence page."""
+    headers = {"Accept": "application/json"}
+
+    response = session.get(
+        url,
+        timeout=1,
+        headers=headers,
+        auth=authentication,
+        params={
+            "expand": ("body.storage", "body.version"),
+            "body-format": "storage",
+        },
+    )
+
+    # GET version number of current content (so it can incremented with the content update)
+    page_data = response.json()
+    version_number = page_data["version"]["number"]
+
+    # for debugging:
+    # print(f"version number before update: {version_number}\n")
+    # response_str = response.text
+    # response_pretty = json.dumps(json.loads(response_str), indent=4)
+    # print(json.dumps(json.loads(response_str), sort_keys=True, indent=4, separators=(",", ": ")))
+    # print(f"GET url: {response.url}")
+    # print(f"GET response code: {response.status_code}")
+
+    return version_number
+
+def update_page_with_new_content(
+    new_content: str | int,
+    existing_version: int,
+    ) -> str:
+    """PUT new content to the relevant confluence page."""
+    headers = {"Accept": "application/json", "Content-Type": "application/json"}
+
+    new_content = table
+
+    payload = json.dumps(
+        {
+            "id": CONFLUENCE_PAGE_ID,
+            "status": "current",
+            "title": CONFLUENCE_PAGE_TITLE,
+            "body": {"representation": "storage", "value": new_content},
+            "version": {"number": existing_version + 1, "message": ""},
+        }
+    )
+    request = session.put(
+        url=URL,
+        data=payload,
+        timeout=1,
+        headers=headers,
+        auth=authentication,
+    )
+
+    return request
+
+    # for debugging:
+    # # check response code from PUTting new content
+
+    # response_from_put_str = response.text
+    # print(json.dumps(json.loads(response_from_put_str), sort_keys=True, indent=4, separators=(",", ": ")))
+    # print(f"put url: {response.url}")
+    # print(f"PUT response code {response.status_code}")
+
+    # # print updated content
+    # new_get = session.get(
+    #     url=URL,
+    #     auth=authentication,
+    #     timeout=1,
+    #     params={"expand": ("body.storage", "body.version"), "body-format": "storage"},
+    # )
+    # print(f" new get code: {new_get.status_code}")
+    # new_get_data = new_get.json()
+    # # print(f"new content: {new_get_data["body"]["storage"]["value"]}")
+
+    # print(f"\n version after update: {new_get_data["version"]["number"]}")
+
 
 # import information about your Confluence page from the file configuration.py
 CONFLUENCE_PAGE_ID = configuration.confluence_page_id
@@ -91,25 +171,35 @@ URL = f"{BASE_URL}wiki/api/v2/pages/{CONFLUENCE_PAGE_ID}"
 CONFLUENCE_USER = configuration.confluence_username
 CONFLUENCE_API_TOKEN = configuration.api_key
 CONFLUENCE_PAGE_TITLE = configuration.confluence_page_name
+authentication = HTTPBasicAuth(CONFLUENCE_USER, CONFLUENCE_API_TOKEN)
+
+# create a session to avoid the need for repeated login
+with requests.Session() as session:
+    session.auth = authentication
 
 # create and populate a list that stores the information about all the drives
 disks = create_disks_list()
-pprint(disks)
 
 # create an HTML table displaying information about the drives
 table = create_table_html(disks)
 
-# create HTML file with table for debugging
-path = Path("table.html")
-path.write_text(table)
+# for debugging:create HTML file with table for debugging
+# path = Path("table.html")
+# path.write_text(table)
 
-#TODO create Requests PUT request for updating a given confluence page
+# get page version, needed for the put request that updates the confluence page
+version_number_before_update = get_page_version(URL)
+print(version_number_before_update)
 
-#TODO implement logging
-#TODO implement SQL recording of storage device status
+# update page with the new content
+update_page_with_new_content(
+    new_content=table,
+    existing_version=version_number_before_update)
 
+# #TODO implement logging
+# #TODO implement SQL recording of storage device status
 
-print("{:.2f}".format(disks[0]["storage"]["used %"]))
+# print("{:.2f}".format(disks[0]["storage"]["used %"]))
 # print(disks[1])
 # print(type(disks[1]))
 # print(type(check_disk_usage("/")))
