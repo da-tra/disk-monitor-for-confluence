@@ -197,9 +197,3 @@ update_page_with_new_content(
 
 # #TODO implement logging
 # #TODO implement SQL recording of storage device status
-
-# print("{:.2f}".format(disks[0]["storage"]["used %"]))
-# print(disks[1])
-# print(type(disks[1]))
-# print(type(check_disk_usage("/")))
-# print(type(update_disks_list()))
