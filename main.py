@@ -189,7 +189,6 @@ table = create_table_html(disks)
 
 # get page version, needed for the put request that updates the confluence page
 version_number_before_update = get_page_version(URL)
-print(version_number_before_update)
 
 # update page with the new content
 update_page_with_new_content(
