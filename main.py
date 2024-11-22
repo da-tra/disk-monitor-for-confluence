@@ -43,15 +43,17 @@ def create_disks_list(disk_paths: list = configuration.drive_paths) -> list[dict
     return disks
 
 def create_table_html(drives: list[dict]) -> str:
-    """Create HTML code for a table that displays the information of all disks in a list. 
-    Column labels are the keys in the dictionaries of each individual storage device."""
+    """Create HTML code for a table that displays the information of all disks in a list.
+
+    Column labels are the keys in the dictionaries of each individual storage device.
+    """
     ## create HTML code for a table with disc info
     # define an empty table
     table = ""
 
     # define labels for the columns
     # get the labels from one of the disks' dictionary
-    table_columns = disks[1].keys()
+    table_columns = drives[1].keys()
 
     # create first table row with table column labels
     table += "<tr>"
@@ -62,7 +64,7 @@ def create_table_html(drives: list[dict]) -> str:
     table += "</tr>"
 
     # create rows for each drive and its data
-    for disk in disks:
+    for disk in drives:
         new_row = ""
         # start row
         new_row += "<tr>"
@@ -177,10 +179,10 @@ with requests.Session() as session:
     session.auth = authentication
 
 # create and populate a list that stores the information about all the drives
-disks = create_disks_list()
+drives = create_disks_list()
 
 # create an HTML table displaying information about the drives
-table = create_table_html(disks)
+table = create_table_html(drives=drives)
 
 # for debugging:create HTML file with table for debugging
 # path = Path("table.html")
