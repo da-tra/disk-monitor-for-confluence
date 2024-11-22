@@ -52,7 +52,7 @@ def create_table_html(drives: list[dict]) -> str:
     table = ""
 
     # define labels for the columns
-    # get the labels from one of the disks' dictionary
+    # get the labels from one of the drives' dictionaries
     table_columns = drives[1].keys()
 
     # create first table row with table column labels
