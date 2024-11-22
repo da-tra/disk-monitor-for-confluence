@@ -97,7 +97,7 @@ Disk Monitor for Confluence extracts information about storage device capacity a
   </tbody>
  </table>
 
-# Program logic
+## Program logic
 1. Establish a session via the HTTP library Requests
 2. Read data about storage capacity from the mounted drives specified in `configuration.py`
 3. Create HTML code to display the information
