@@ -12,7 +12,7 @@ Disk Monitor for Confluence - A tool for displaying capacity of mounted storage 
 
 ## Usage
 
-Disk Monitor for Confluence reads a user-created file `configuration.py`, which stores credentials for a Confluence page, a Confluence user and their API key, as well as a list of the storages devices to be monitored, identified via their mounted file paths.
+Disk Monitor for Confluence reads a user-created file `configuration.py`, which stores credentials for a Confluence page, a Confluence user and their API key, as well as a list of the storages devices to be monitored. The storage devices are identified via their mounted file paths.
 
 #### Example config:
 ```python
@@ -97,3 +97,9 @@ Disk Monitor for Confluence extracts information about storage device capacity a
   </tbody>
  </table>
 
+# Program logic
+1. Establish a session via the HTTP library Requests
+2. Read data about storage capacity from the mounted drives specified in `configuration.py`
+3. Create HTML code to display the information
+4. GET the version number of the eixisting Confluence page Requests
+5. PUT the HTML table on the Confluence page
