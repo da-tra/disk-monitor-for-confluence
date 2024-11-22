@@ -27,7 +27,7 @@ confluence_username = "mail@provider.com"
 # Enter the api key for the Confluence space 
 api_key = "an-api-key"
 
-# List the paths of all drives to be monitored (starting with "/").
+# List the paths of all drives to be monitored (starting with "/")
 drive_paths = [
     "/path1",
     "/path2",
