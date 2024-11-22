@@ -185,6 +185,7 @@ drives = create_disks_list()
 table = create_table_html(drives=drives)
 
 # for debugging:create HTML file with table for debugging
+# from pathlib import Path
 # path = Path("table.html")
 # path.write_text(table)
 
