@@ -1,11 +1,14 @@
-"""Gets data about free storage on mounted drives and HTTP PUTs them on an existing Confluence page inside a generated table."""
+"""Writes disk usage data to a Confluence page.
+
+Gets data about free storage on mounted drives and HTTP PUTs them on an existing Confluence page inside a generated 
+table.
+User credentials for Confluence and the paths for storage devices will be read from a file titled
+configuration.py, which needs to be created by the user. For instructions refer to README.md
+"""
 
 import json
 import shutil
-
-from datetime import datetime, timezone
-from pathlib import Path
-from pprint import pprint
+from datetime import datetime
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -27,13 +30,10 @@ def check_disk_usage(path: str) -> dict:
         "total GB": total_gb,
         }
 
-def create_disks_list(
-    disk_paths: list = configuration.drive_paths,
-    ) -> list[dict]:
-    """Create a list for storing info about all the disks. 
-    Then populate it with information about all the disks' storage, including time of recording."""
+def create_disks_list(disk_paths: list = configuration.drive_paths) -> list[dict]:
+    """Store status of monitored disks in new list."""
     disks = []
-    time_of_snapshot = datetime.now(timezone.utc).strftime("%d-%m-%Y %H:%M:%S")
+    time_of_snapshot = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
     for disk_path in disk_paths:
         disk_dict = {}
         disk_dict["path"] = disk_path
@@ -85,7 +85,6 @@ def create_table_html(drives: list[dict]) -> str:
     return f"<table><tbody>{table}</tbody></table>"
 
 def get_page_version(url: str) -> int:
-    
     """Get version number of confluence page."""
     headers = {"Accept": "application/json"}
 
