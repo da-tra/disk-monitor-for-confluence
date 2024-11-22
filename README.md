@@ -59,7 +59,7 @@ Disk Monitor for Confluence extracts information about storage device capacity a
     <tr>
       <td>
        <p>
-         /
+         /path1
        </p>
       </td>
       <td>
@@ -78,7 +78,7 @@ Disk Monitor for Confluence extracts information about storage device capacity a
     <tr>
       <td>
        <p>
-          /boot
+          /path2
         </p>
       </td>
       <td>
