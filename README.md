@@ -37,68 +37,10 @@ drive_paths = [
 Disk Monitor for Confluence extracts information about storage device capacity and writes them to the defined Confluence page, including a timestamp.
 
 ### Example output
-```html
-<table>
-  <tbody>
-    <tr>
-      <th>
-        <p>
-          <strong>path</strong>
-        </p>
-      </th>
-      <th>
-        <p>
-          <strong>storage</strong>
-        </p>
-      </th>
-      <th>
-       <p>
-         <strong>time of snapshot</strong>
-       </p>
-      </th>
-    </tr>
-    <tr>
-      <td>
-       <p>
-         /
-       </p>
-      </td>
-      <td>
-       <p>
-        <strong>used: 25.0 % </strong> <br/>
-         free: 100.00 GB<br/>
-         total: 400.00 GB<br/>
-       </p>
-      </td>
-      <td>
-       <p>
-         22-11-2024 14:12:56
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-       <p>
-          /boot
-        </p>
-      </td>
-      <td>
-       <p>
-          <strong>used: 20.0 % </strong> <br/>
-          free: 0.80 GB<br/>
-          total: 1.00 GB<br/>
-        </p>
-      </td>
-      <td>
-        <p>
-          22-11-2024 14:12:56
-        </p>
-      </td>
-    </tr>
-  </tbody>
- </table>
+```markdown
+| path   | storage                                       | time of snapshot     |
+|--------|-----------------------------------------------|----------------------|
+| /path1 | used: 47.8 %  free: 214.79 GBtotal: 455.59 GB |  22-11-2024 14:12:56 |
+| /path2 | used: 15.6 %  free: 0.84 GBtotal: 1.00 GB     |  22-11-2024 14:12:56 |
 ```
 
-
-
-Program logic:
