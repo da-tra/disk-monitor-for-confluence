@@ -64,22 +64,22 @@ def create_table_html(drives: list[dict]) -> str:
     table += "</tr>"
 
     # create rows for each drive and its data
-    for disk in drives:
+    for drive in drives:
         new_row = ""
         # start row
         new_row += "<tr>"
         # add disk path
-        new_row += f"<td><p>{disk["path"]}</p></td>"
+        new_row += f"<td><p>{drive["path"]}</p></td>"
         # open storage cell and fill it
         new_row += "<td><p>"
-        new_row += f"<strong>used: {"{:.1f}".format(disk["storage"]["used %"])} % </strong> <br/>"
-        new_row += f"free: {"{:.2f}".format(disk["storage"]["free GB"])} GB<br/>"
-        new_row += f"total: {"{:.2f}".format(disk["storage"]["total GB"])} GB<br/>"
+        new_row += f"<strong>used: {"{:.1f}".format(drive["storage"]["used %"])} % </strong> <br/>"
+        new_row += f"free: {"{:.2f}".format(drive["storage"]["free GB"])} GB<br/>"
+        new_row += f"total: {"{:.2f}".format(drive["storage"]["total GB"])} GB<br/>"
         # close storage cell
         new_row += "</p></td>"
         # TODO add time stamp of update
         # new cell for timestamp
-        new_row += f"<td> <p>{disk["time of snapshot"]}</p></td>"
+        new_row += f"<td> <p>{drive["time of snapshot"]}</p></td>"
         # finish this row
         new_row += "</tr>"
         table += new_row
