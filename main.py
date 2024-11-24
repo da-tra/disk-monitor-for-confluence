@@ -30,6 +30,7 @@ def check_disk_usage(path: str) -> dict:
         "free GB": free_gb,
         "total GB": total_gb,
         }
+# TODO write test for HTML table code
 
 # TODO refactoring: store device capacity in a data class instead of a dictionary
 @dataclass
