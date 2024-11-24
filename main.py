@@ -45,9 +45,9 @@ class DriveInfo:
     path: str
     storage: DiskUsageInfo
 
-# TODO refactoring: modify FUN create_disks_list to have it create a data class
+# TODO refactoring: create funciton to add data to DiskUsageInfo
 # TODO refactoring: modify FUN create_table_html to use the data class instead of the old dict
-
+# TODO remove FUNs create_disk_list and create_table_html after new functions work
 
 def create_disks_list(disk_paths: list = configuration.drive_paths) -> list[dict]:
     """Store status of monitored disks in list of dicts."""
