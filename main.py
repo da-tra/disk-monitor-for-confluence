@@ -31,6 +31,7 @@ def check_disk_usage(path: str) -> dict:
         "total GB": total_gb,
         }
 # TODO write test for HTML table code
+    # TODO add timestamp as variable to make testable
 
 # TODO refactoring: store device capacity in a data class instead of a dictionary
 @dataclass
@@ -49,18 +50,16 @@ class DriveInfo:
 
 
 def create_disks_list(disk_paths: list = configuration.drive_paths) -> list[dict]:
-    """Store status of monitored disks in new dataclass."""
-
-
-    # disks = []
-    # time_of_snapshot = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-    # for disk_path in disk_paths:
-    #     disk_dict = {}
-    #     disk_dict["path"] = disk_path
-    #     disk_dict["storage"] = check_disk_usage(disk_path)
-    #     disk_dict["time of snapshot"] = time_of_snapshot
-    #     disks.append(disk_dict)
-    # return disks
+    """Store status of monitored disks in list of dicts."""
+    disks = []
+    time_of_snapshot = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+    for disk_path in disk_paths:
+        disk_dict = {}
+        disk_dict["path"] = disk_path
+        disk_dict["storage"] = check_disk_usage(disk_path)
+        disk_dict["time of snapshot"] = time_of_snapshot
+        disks.append(disk_dict)
+    return disks
 
 def create_table_html(drives: list[dict]) -> str:
     """Create HTML code for a table that displays the information of all disks in a list.
@@ -73,7 +72,7 @@ def create_table_html(drives: list[dict]) -> str:
 
     # define labels for the columns
     # get the labels from one of the drives' dictionaries
-    table_columns = drives[1].keys()
+    table_columns = drives[0].keys()
 
     # create first table row with table column labels
     table += "<tr>"
