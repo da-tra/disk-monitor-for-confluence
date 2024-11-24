@@ -16,6 +16,22 @@ from requests.auth import HTTPBasicAuth
 
 import configuration
 
+# TODO refactoring: store device capacity in a data class instead of a dictionary
+@dataclass
+class DiskUsageInfo:
+    total_gb: int
+    used_percent: float
+    free_gb: int
+
+@dataclass
+class DriveInfo:
+    path: str
+    storage: DiskUsageInfo
+
+def check_disk_usage_dc(path:str) -> DiskUsageInfo:
+
+def generate_drive_registry() ##### Continue here!
+
 
 def check_disk_usage(path: str) -> dict:
     """Use package shutil to extract information about storage of a mounted drive."""
@@ -30,20 +46,11 @@ def check_disk_usage(path: str) -> dict:
         "free GB": free_gb,
         "total GB": total_gb,
         }
+
 # TODO write test for HTML table code
     # TODO add timestamp as variable to make testable
 
-# TODO refactoring: store device capacity in a data class instead of a dictionary
-@dataclass
-class DiskUsageInfo:
-    total_gb: int
-    used_percent: float
-    free_gb: int
 
-@dataclass
-class DriveInfo:
-    path: str
-    storage: DiskUsageInfo
 
 # TODO refactoring: create function to add data to DiskUsageInfo
 # TODO refactoring: create a FUN based on dataclass DriveInfo to create HTML table
