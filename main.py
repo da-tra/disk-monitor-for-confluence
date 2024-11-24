@@ -15,7 +15,6 @@ from requests.auth import HTTPBasicAuth
 
 import configuration
 
-
 def check_disk_usage(path: str) -> dict:
     """Use package shutil to extract information about storage of a mounted drive."""
     disk_dict = dict()
@@ -29,6 +28,11 @@ def check_disk_usage(path: str) -> dict:
         "free GB": free_gb,
         "total GB": total_gb,
         }
+
+# TODO refactoring: store device capacity in a data class instead of a dictionary
+# TODO refactoring: modify FUN create_disks_list to have it create a data class
+# TODO refactoring: modify FUN create_table_html to use the data class instead of the old dict
+
 
 def create_disks_list(disk_paths: list = configuration.drive_paths) -> list[dict]:
     """Store status of monitored disks in new list."""
