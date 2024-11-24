@@ -1,4 +1,4 @@
-"""Writes disk usage data to a Confluence page.
+"""Write disk usage data to a Confluence page.
 
 Gets data about free storage on mounted drives and HTTP PUTs them on an existing Confluence page inside a generated 
 table.
@@ -8,12 +8,14 @@ configuration.py, which needs to be created by the user. For instructions refer 
 
 import json
 import shutil
+from dataclasses import dataclass
 from datetime import datetime
 
 import requests
 from requests.auth import HTTPBasicAuth
 
 import configuration
+
 
 def check_disk_usage(path: str) -> dict:
     """Use package shutil to extract information about storage of a mounted drive."""
@@ -30,21 +32,34 @@ def check_disk_usage(path: str) -> dict:
         }
 
 # TODO refactoring: store device capacity in a data class instead of a dictionary
+@dataclass
+class DiskUsageInfo:
+    total_gb: int
+    used_percent: float
+    free_gb: int
+
+@dataclass
+class DriveInfo:
+    path: str
+    storage: DiskUsageInfo
+
 # TODO refactoring: modify FUN create_disks_list to have it create a data class
 # TODO refactoring: modify FUN create_table_html to use the data class instead of the old dict
 
 
 def create_disks_list(disk_paths: list = configuration.drive_paths) -> list[dict]:
-    """Store status of monitored disks in new list."""
-    disks = []
-    time_of_snapshot = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-    for disk_path in disk_paths:
-        disk_dict = {}
-        disk_dict["path"] = disk_path
-        disk_dict["storage"] = check_disk_usage(disk_path)
-        disk_dict["time of snapshot"] = time_of_snapshot
-        disks.append(disk_dict)
-    return disks
+    """Store status of monitored disks in new dataclass."""
+
+
+    # disks = []
+    # time_of_snapshot = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+    # for disk_path in disk_paths:
+    #     disk_dict = {}
+    #     disk_dict["path"] = disk_path
+    #     disk_dict["storage"] = check_disk_usage(disk_path)
+    #     disk_dict["time of snapshot"] = time_of_snapshot
+    #     disks.append(disk_dict)
+    # return disks
 
 def create_table_html(drives: list[dict]) -> str:
     """Create HTML code for a table that displays the information of all disks in a list.
