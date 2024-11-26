@@ -11,9 +11,9 @@ def test_dclass_diskusageinfo(path=configuration.drive_paths[0]):
     assert dataclass.free_gb == function["free GB"]
     assert dataclass.total_gb == function["total GB"]
 
+def test_generate_drive_registry(path):
+    """Does the dataclass based function generate_drive_registry fulfil the same function as create_disks_list?"""
 
 
 def test_create_table_html():
     """Does the HTML table created from dataclass DriveInfo match the one created from dictionaries?"""
-
-# test_dclass_diskusageinfo(configuration.drive_paths[0])

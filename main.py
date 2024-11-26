@@ -19,13 +19,16 @@ import configuration
 # TODO refactoring: store device capacity in a data class instead of a dictionary
 @dataclass
 class DiskUsageInfo:
+    """Dataclass that stores information about a drive's storage capacity."""
+
     used_percent: float
     free_gb: int
     total_gb: int
 
-
 @dataclass
 class DriveInfo:
+    """Dataclass that stores a drive's path and storage information(=DiskUsageInfo)."""
+
     path: str
     storage: DiskUsageInfo
 
@@ -68,6 +71,17 @@ def check_disk_usage(path: str) -> dict:
 
 
 # TODO refactoring: create function to create a list with the information about all drives
+
+def create_drive_registry(drive_paths: list[str]) -> list[DriveInfo]:
+    """Turn a list of drive mounting points into a list of objects store their path and storage capacity."""
+
+    registry = [
+        DriveInfo(path=path, storage=check_disk_usage_dc(path)) for path in drive_paths
+        ]
+
+    return registry
+
+
 # TODO remove FUNs create_disk_list and create_table_html after new functions work and have been tested
 
 def create_disks_list(disk_paths: list = configuration.drive_paths) -> list[dict]:
