@@ -36,11 +36,11 @@ def check_disk_usage_dc(path:str) -> DiskUsageInfo:
     used_percent = _used / 2**30
     free_gb = _free / 2**30
 
-    disk_usage_info = DiskUsageInfo(total_gb=total_gb, used_percent=used_percent, free_gb=free_gb)
+    disk_usage_info_dc = DiskUsageInfo(total_gb=total_gb, used_percent=used_percent, free_gb=free_gb)
 
-    return disk_usage_info
+    return disk_usage_info_dc
 
-def generate_drive_registry_dc(path: str) -> DiskUsageInfo:
+# def generate_drive_registry_dc(path: str) -> DiskUsageInfo:
     
 
 
