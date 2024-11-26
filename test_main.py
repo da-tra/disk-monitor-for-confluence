@@ -24,8 +24,8 @@ def test_generate_drive_registry(paths: list =configuration.drive_paths):
     #     assert registry[index].path == disks_list[index]["path"]
     #     index += 1
     index = 0
-    registry = create_drive_registry(paths[0])
-    disks_list = create_disks_list(paths[0][0])
+    registry = create_drive_registry(paths)[0].storage.used_percent
+    disks_list = create_disks_list(paths)[0]["storage"]["used %"]
     print(registry)
     print(disks_list)
 
