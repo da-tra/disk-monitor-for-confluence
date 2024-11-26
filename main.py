@@ -29,6 +29,8 @@ class DriveInfo:
     path: str
     storage: DiskUsageInfo
 
+# TODO refactoring: create function to add data to DiskUsageInfo
+
 def check_disk_usage_dc(path:str) -> DiskUsageInfo:
     """Read storage capacity with shutil and create DiskUsageInfo with the data."""
     _total, _used, _free = shutil.disk_usage(path)
@@ -44,7 +46,7 @@ def check_disk_usage_dc(path:str) -> DiskUsageInfo:
 # def generate_drive_registry_dc(path: str) -> DiskUsageInfo:
     
 
-# TODO after  refactoring to dataclasses: remove FUN check_disk_usage and rename check_disk_usage_dc to this name
+# TODO after  refactoring to dataclasses: remove old FUNs and change names of new function to better names
 # TODO after refactoring to dataclasses: remove tests for equivalece of check_disk_usage and ..._dc
 def check_disk_usage(path: str) -> dict:
     """Use package shutil to extract information about storage of a mounted drive."""
@@ -65,8 +67,7 @@ def check_disk_usage(path: str) -> dict:
 
 
 
-# TODO refactoring: create function to add data to DiskUsageInfo
-# TODO refactoring: create a FUN based on dataclass DriveInfo to create HTML table
+# TODO refactoring: create function to create a list with the information about all drives
 # TODO remove FUNs create_disk_list and create_table_html after new functions work and have been tested
 
 def create_disks_list(disk_paths: list = configuration.drive_paths) -> list[dict]:
@@ -80,6 +81,9 @@ def create_disks_list(disk_paths: list = configuration.drive_paths) -> list[dict
         disk_dict["time of snapshot"] = time_of_snapshot
         disks.append(disk_dict)
     return disks
+
+# TODO refactoring: create a FUN based on dataclass DriveInfo to create HTML table
+
 
 def create_table_html(drives: list[dict]) -> str:
     """Create HTML code for a table that displays the information of all disks in a list.
