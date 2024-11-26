@@ -29,8 +29,19 @@ class DriveInfo:
     storage: DiskUsageInfo
 
 def check_disk_usage_dc(path:str) -> DiskUsageInfo:
+    """Read storage capacity with shutil and create DiskUsageInfo with the data."""
+    _total, _used, _free = shutil.disk_usage(path)
 
-def generate_drive_registry() ##### Continue here!
+    total_gb = _total / 2**30
+    used_percent = _used / 2**30
+    free_gb = _free / 2**30
+
+    disk_usage_info = DiskUsageInfo(total_gb=total_gb, used_percent=used_percent, free_gb=free_gb)
+
+    return disk_usage_info
+
+def generate_drive_registry_dc(path: str) -> DiskUsageInfo:
+    
 
 
 def check_disk_usage(path: str) -> dict:
