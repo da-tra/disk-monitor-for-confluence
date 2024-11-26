@@ -19,9 +19,10 @@ import configuration
 # TODO refactoring: store device capacity in a data class instead of a dictionary
 @dataclass
 class DiskUsageInfo:
-    total_gb: int
     used_percent: float
     free_gb: int
+    total_gb: int
+
 
 @dataclass
 class DriveInfo:
@@ -33,7 +34,7 @@ def check_disk_usage_dc(path:str) -> DiskUsageInfo:
     _total, _used, _free = shutil.disk_usage(path)
 
     total_gb = _total / 2**30
-    used_percent = _used / 2**30
+    used_percent = _used / _total* 100
     free_gb = _free / 2**30
 
     disk_usage_info_dc = DiskUsageInfo(total_gb=total_gb, used_percent=used_percent, free_gb=free_gb)
