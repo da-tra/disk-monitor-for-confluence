@@ -44,7 +44,8 @@ def check_disk_usage_dc(path:str) -> DiskUsageInfo:
 # def generate_drive_registry_dc(path: str) -> DiskUsageInfo:
     
 
-
+# TODO after  refactoring to dataclasses: remove FUN check_disk_usage and rename check_disk_usage_dc to this name
+# TODO after refactoring to dataclasses: remove tests for equivalece of check_disk_usage and ..._dc
 def check_disk_usage(path: str) -> dict:
     """Use package shutil to extract information about storage of a mounted drive."""
     disk_dict = dict()
