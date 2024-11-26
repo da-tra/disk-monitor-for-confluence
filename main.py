@@ -58,11 +58,13 @@ def check_disk_usage(path: str) -> dict:
     total_gb = _total / 2**30
     used_percent = _used / _total * 100
     free_gb = _free / 2**30
+    time_of_snapshot = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
     return {
         "used %": used_percent,
         "free GB": free_gb,
         "total GB": total_gb,
+        "time of snapshot": time_of_snapshot
         }
 
 # TODO write test for HTML table code
@@ -87,12 +89,12 @@ def create_drive_registry(drive_paths: list[str]) -> list[DriveInfo]:
 def create_disks_list(disk_paths: list = configuration.drive_paths) -> list[dict]:
     """Store status of monitored disks in list of dicts."""
     disks = []
-    time_of_snapshot = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+    # time_of_snapshot = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
     for disk_path in disk_paths:
         disk_dict = {}
         disk_dict["path"] = disk_path
         disk_dict["storage"] = check_disk_usage(disk_path)
-        disk_dict["time of snapshot"] = time_of_snapshot
+        # disk_dict["time of snapshot"] = time_of_snapshot
         disks.append(disk_dict)
     return disks
 
@@ -136,7 +138,7 @@ def create_table_html(drives: list[dict]) -> str:
         new_row += "</p></td>"
         # TODO add time stamp of update
         # new cell for timestamp
-        new_row += f"<td> <p>{drive["time of snapshot"]}</p></td>"
+        new_row += f"<td> <p>{drive["storage"]["time of snapshot"]}</p></td>"
         # finish this row
         new_row += "</tr>"
         table += new_row

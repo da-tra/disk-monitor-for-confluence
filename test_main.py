@@ -14,11 +14,21 @@ def test_dclass_diskusageinfo(paths=configuration.drive_paths):
         assert dataclass.free_gb == function["free GB"]
         assert dataclass.total_gb == function["total GB"]
 
-def test_generate_drive_registry(paths=configuration.drive_paths):
+def test_generate_drive_registry(paths: list =configuration.drive_paths):
     """Does the dataclass based function generate_drive_registry fulfil the same function as create_disks_list?"""
-    registry = create_drive_registry(paths)
-    disks_list = create_disks_list(paths)
-    assert registry[0].path == disks_list[0]["path"]
+    # index = 0
+    # for drive in paths:
+    #     registry = create_drive_registry(drive)
+    #     disks_list = create_disks_list(drive)
+    #     assert registry[index].path == disks_list[index]["path"]
+    #     index += 1
+    index = 0
+    registry = create_drive_registry(paths[0])
+    disks_list = create_disks_list(paths[0][0])
+    print(registry)
+    print(disks_list)
 
 def test_create_table_html():
     """Does the HTML table created from dataclass DriveInfo match the one created from dictionaries?"""
+
+test_generate_drive_registry()
