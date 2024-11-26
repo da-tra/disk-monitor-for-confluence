@@ -1,5 +1,6 @@
-from main import DriveInfo, DiskUsageInfo, check_disk_usage
-from main import create_disks_list, create_table_html, check_disk_usage_dc
+from main import DriveInfo, DiskUsageInfo, check_disk_usage, check_disk_usage_dc
+from main import create_disks_list, create_drive_registry
+from main import create_table_html # , create_table_html_dc
 import configuration
 
 def test_dclass_diskusageinfo(path=configuration.drive_paths[0]):
@@ -13,7 +14,7 @@ def test_dclass_diskusageinfo(path=configuration.drive_paths[0]):
 
 def test_generate_drive_registry(path):
     """Does the dataclass based function generate_drive_registry fulfil the same function as create_disks_list?"""
-
+    registry = crea
 
 def test_create_table_html():
     """Does the HTML table created from dataclass DriveInfo match the one created from dictionaries?"""
