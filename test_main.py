@@ -13,6 +13,7 @@ def test_dclass_diskusageinfo(paths=configuration.drive_paths):
         assert dataclass.used_percent == function["used %"]
         assert dataclass.free_gb == function["free GB"]
         assert dataclass.total_gb == function["total GB"]
+        assert dataclass.time_of_snapshot == function["time of snapshot"]
 
 def test_generate_drive_registry(paths: list =configuration.drive_paths):
     """Does the dataclass based function generate_drive_registry fulfil the same function as create_disks_list?"""

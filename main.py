@@ -24,6 +24,7 @@ class DiskUsageInfo:
     used_percent: float
     free_gb: int
     total_gb: int
+    time_of_snapshot: str
 
 @dataclass
 class DriveInfo:
@@ -41,8 +42,9 @@ def check_disk_usage_dc(path:str) -> DiskUsageInfo:
     total_gb = _total / 2**30
     used_percent = _used / _total* 100
     free_gb = _free / 2**30
+    time_of_snapshot = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
-    disk_usage_info_dc = DiskUsageInfo(total_gb=total_gb, used_percent=used_percent, free_gb=free_gb)
+    disk_usage_info_dc = DiskUsageInfo(total_gb=total_gb, used_percent=used_percent, free_gb=free_gb, time_of_snapshot=time_of_snapshot)
 
     return disk_usage_info_dc
 
