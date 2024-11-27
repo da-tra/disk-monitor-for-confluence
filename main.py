@@ -48,9 +48,6 @@ def check_disk_usage_dc(path:str) -> DiskUsageInfo:
 
     return disk_usage_info_dc
 
-# def generate_drive_registry_dc(path: str) -> DiskUsageInfo:
-    
-
 # TODO after  refactoring to dataclasses: remove old FUNs and change names of new function to better names
 # TODO after refactoring to dataclasses: remove tests for equivalece of check_disk_usage and ..._dc
 def check_disk_usage(path: str) -> dict:
@@ -70,11 +67,6 @@ def check_disk_usage(path: str) -> dict:
         }
 
 # TODO write test for HTML table code
-    # TODO add timestamp as variable to make testable
-
-
-
-# TODO refactoring: create function to create a list with the information about all drives
 
 def create_drive_registry(drive_paths: list[str]) -> list[DriveInfo]:
     """Turn a list of drive mounting points into a list of objects store their path and storage capacity."""
@@ -91,16 +83,36 @@ def create_drive_registry(drive_paths: list[str]) -> list[DriveInfo]:
 def create_disks_list(disk_paths: list = configuration.drive_paths) -> list[dict]:
     """Store status of monitored disks in list of dicts."""
     disks = []
-    # time_of_snapshot = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
     for disk_path in disk_paths:
         disk_dict = {}
         disk_dict["path"] = disk_path
         disk_dict["storage"] = check_disk_usage(disk_path)
-        # disk_dict["time of snapshot"] = time_of_snapshot
         disks.append(disk_dict)
     return disks
 
 # TODO refactoring: create a FUN based on dataclass DriveInfo to create HTML table
+def create_table_html_dc(disk_registry: list[DriveInfo]) -> str:
+    """Create HTML code for a table that displays the information of all disks in a list.
+
+    Column labels are the keys in the dictionaries of each individual storage device.
+    """
+    ## create HTML code for a table with disc info
+    # define an empty table
+    table = ""
+
+    # define labels for the columns
+    # get the labels from one of the drives' dictionaries
+    table_columns = 
+
+    # create first table row with table column labels
+    table += "<tr>"
+    for column_name in table_columns:
+        table += "<th><p><strong>"
+        table += column_name
+        table += "</strong></p></th>"
+    table += "</tr>"
+
+    return table
 
 
 def create_table_html(drives: list[dict]) -> str:
