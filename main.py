@@ -42,9 +42,8 @@ def check_disk_usage_dc(path:str) -> DiskUsageInfo:
     total_gb = _total / 2**30
     used_percent = _used / _total* 100
     free_gb = _free / 2**30
-    time_of_snapshot = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
-    disk_usage_info_dc = DiskUsageInfo(total_gb=total_gb, used_percent=used_percent, free_gb=free_gb, time_of_snapshot=time_of_snapshot)
+    disk_usage_info_dc = DiskUsageInfo(total_gb=total_gb, used_percent=used_percent, free_gb=free_gb)
 
     return disk_usage_info_dc
 
@@ -72,8 +71,12 @@ def create_drive_registry(drive_paths: list[str]) -> list[DriveInfo]:
     """Turn a list of drive mounting points into a list of objects store their path and storage capacity."""
 
     registry = [
-        DriveInfo(path=path, storage=check_disk_usage_dc(path)) for path in drive_paths
-        ]
+        DriveInfo(
+            path=path, 
+            storage=check_disk_usage_dc(path),
+            time_of_snapshot = datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+            ) for path in drive_paths
+            ]
 
     return registry
 
@@ -102,7 +105,7 @@ def create_table_html_dc(disk_registry: list[DriveInfo]) -> str:
 
     # define labels for the columns
     # get the labels from one of the drives' dictionaries
-    table_columns = 
+    table_columns = ""
 
     # create first table row with table column labels
     table += "<tr>"

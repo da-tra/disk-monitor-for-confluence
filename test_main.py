@@ -6,6 +6,7 @@ import configuration, main
 def test_dclass_diskusageinfo(paths=configuration.drive_paths):
     """Does the dataclass based check_disk_usage_dc obtain the same data as check_disk_usage?"""
     
+    registry = create_drive_registry(paths)
     for path in paths:
         dataclass = check_disk_usage_dc(path)
         function = check_disk_usage(path)
@@ -13,7 +14,6 @@ def test_dclass_diskusageinfo(paths=configuration.drive_paths):
         assert dataclass.used_percent == function["used %"]
         assert dataclass.free_gb == function["free GB"]
         assert dataclass.total_gb == function["total GB"]
-        assert dataclass.time_of_snapshot == function["time of snapshot"]
 
 def test_generate_drive_registry(paths: list =configuration.drive_paths):
     """Does the dataclass based function generate_drive_registry fulfil the same function as create_disks_list?"""
@@ -35,7 +35,7 @@ def test_generate_drive_registry(paths: list =configuration.drive_paths):
         disks_list = create_disks_list(paths)[index]["storage"]["total GB"]
         assert registry == disks_list
 
-        registry = create_drive_registry(paths)[index].storage.time_of_snapshot
+        registry = create_drive_registry(paths)[index].time_of_snapshot
         disks_list = create_disks_list(paths)[index]["storage"]["time of snapshot"]
         assert registry == disks_list
 
@@ -43,6 +43,7 @@ def test_generate_drive_registry(paths: list =configuration.drive_paths):
 # def test_create_table_html_dc():
 #     """Does the HTML table created from dataclass DriveInfo match the one created from dictionaries?"""
 
-print(f"table: {create_table_html_dc(main.create_drive_registry(configuration.drive_paths))}")
+print(main.create_drive_registry(configuration.drive_paths))
+print(f"table: l{create_table_html_dc(main.create_drive_registry(configuration.drive_paths))}")
 print(create_table_html(drives=create_disks_list()))
 
