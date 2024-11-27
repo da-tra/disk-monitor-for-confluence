@@ -129,11 +129,13 @@ def create_table_html_dc(disk_registry: list[DriveInfo]) -> str:
         # open storage cell and fill it
         new_row += "<td><p>"
         new_row += f"<strong>used: {f"{disk.storage.used_percent:.1f}"} % </strong> <br/>"
-        new_row += f"free: {f"{disk.storage.free_gb:.2f}"} GB <br/>"
-        new_row += f"total: {f"{disk.storage.total_gb:.2f}"} GB <br/>"
-        # # new cell for timestamp
-        # new_row += f"<td> <p>{drive["storage"]["time of snapshot"]}</p></td>"
-        # # finish this row
+        new_row += f"free: {f"{disk.storage.free_gb:.2f}"} GB<br/>"
+        new_row += f"total: {f"{disk.storage.total_gb:.2f}"} GB<br/>"
+        # close storage cell
+        new_row += "</p></td>"
+        # new cell for timestamp
+        new_row += f"<td> <p>{disk.time_of_snapshot}</p></td>"
+        # finish this row
         new_row += "</tr>"
         table += new_row
     # assemble the table
