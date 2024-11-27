@@ -24,7 +24,6 @@ class DiskUsageInfo:
     used_percent: float
     free_gb: int
     total_gb: int
-    time_of_snapshot: str
 
 @dataclass
 class DriveInfo:
@@ -32,6 +31,7 @@ class DriveInfo:
 
     path: str
     storage: DiskUsageInfo
+    time_of_snapshot: str
 
 # TODO refactoring: create function to add data to DiskUsageInfo
 
