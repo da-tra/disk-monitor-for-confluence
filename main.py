@@ -90,6 +90,8 @@ def create_disks_list(disk_paths: list = configuration.drive_paths) -> list[dict
         disk_dict = {}
         disk_dict["path"] = disk_path
         disk_dict["storage"] = check_disk_usage(disk_path)
+        disk_dict["time of snapshot"] = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+
         disks.append(disk_dict)
     return disks
 
@@ -104,8 +106,11 @@ def create_table_html_dc(disk_registry: list[DriveInfo]) -> str:
     table = ""
 
     # define labels for the columns
-    # get the labels from one of the drives' dictionaries
-    table_columns = ""
+    # get the labels dataclass DriveInfo's attributes
+    attributes: dict = DriveInfo.__dict__["__match_args__"]
+    # remove "_"-separators
+    table_columns = [v.replace('_', ' ') for v in attributes]
+
 
     # create first table row with table column labels
     table += "<tr>"
@@ -114,6 +119,25 @@ def create_table_html_dc(disk_registry: list[DriveInfo]) -> str:
         table += column_name
         table += "</strong></p></th>"
     table += "</tr>"
+
+    for disk in disk_registry:
+        new_row = ""
+        # start row
+        new_row += "<tr>"
+        # add disk path
+        new_row += f"<td><p>{disk.path}</p></td>"
+        # open storage cell and fill it
+        new_row += "<td><p>"
+        new_row += f"<strong>used: {f"{disk.storage.used_percent:.1f}"} % </strong> <br/>"
+        new_row += f"free: {f"{disk.storage.free_gb:.2f}"} GB <br/>"
+        new_row += f"total: {f"{disk.storage.total_gb:.2f}"} GB <br/>"
+        # # new cell for timestamp
+        # new_row += f"<td> <p>{drive["storage"]["time of snapshot"]}</p></td>"
+        # # finish this row
+        new_row += "</tr>"
+        table += new_row
+    # assemble the table
+    table = f"<table><tbody>{table}</tbody></table>"
 
     return table
 
