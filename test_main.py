@@ -43,7 +43,8 @@ def test_generate_drive_registry(paths: list =configuration.drive_paths):
 # def test_create_table_html_dc():
 #     """Does the HTML table created from dataclass DriveInfo match the one created from dictionaries?"""
 
+# print(list(main.DriveInfo.__dict__["__match_args__"]))
 print(main.create_drive_registry(configuration.drive_paths))
-print(f"table: l{create_table_html_dc(main.create_drive_registry(configuration.drive_paths))}")
-print(create_table_html(drives=create_disks_list()))
+print(f"\n{create_table_html_dc(main.create_drive_registry(configuration.drive_paths))}")
+print(f"\n{create_table_html(drives=create_disks_list())}")
 
