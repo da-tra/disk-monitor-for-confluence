@@ -95,7 +95,6 @@ def create_disks_list(disk_paths: list = configuration.drive_paths) -> list[dict
         disks.append(disk_dict)
     return disks
 
-# TODO refactoring: create a FUN based on dataclass DriveInfo to create HTML table
 def create_table_html_dc(disk_registry: list[DriveInfo]) -> str:
     """Create HTML code for a table that displays the information of all disks in a list.
 
@@ -281,10 +280,10 @@ with requests.Session() as session:
     session.auth = authentication
 
 # create and populate a list that stores the information about all the drives
-drives = create_disks_list()
+drives = create_drive_registry(drive_paths=configuration.drive_paths)
 
 # create an HTML table displaying information about the drives
-table = create_table_html(drives=drives)
+table = create_table_html_dc(disk_registry=drives)
 
 # for debugging:create HTML file with table for debugging
 # from pathlib import Path
