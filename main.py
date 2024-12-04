@@ -80,8 +80,7 @@ def create_drive_registry(drive_paths: list[str]) -> list[DriveInfo]:
 
     return registry
 
-
-def create_table_html_dc(disk_registry: list[DriveInfo]) -> str:
+def create_table_html(disk_registry: list[DriveInfo]) -> str:
     """Create HTML code for a table that displays the information of all disks in a list.
 
     Column labels are the keys in the dictionaries of each individual storage device.
@@ -268,7 +267,7 @@ with requests.Session() as session:
 drives = create_drive_registry(drive_paths=configuration.drive_paths)
 
 # create an HTML table displaying information about the drives
-table = create_table_html_dc(disk_registry=drives)
+table = create_table_html(disk_registry=drives)
 
 # for debugging:create HTML file with table for debugging
 # from pathlib import Path
