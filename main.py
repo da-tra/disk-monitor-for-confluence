@@ -47,8 +47,6 @@ def check_disk_usage_dc(path:str) -> DiskUsageInfo:
 
     return disk_usage_info_dc
 
-# TODO after  refactoring to dataclasses: remove old FUNs and change names of new function to better names
-# TODO after refactoring to dataclasses: remove tests for equivalece of check_disk_usage and ..._dc
 def check_disk_usage(path: str) -> dict:
     """Use package shutil to extract information about storage of a mounted drive."""
     disk_dict = dict()
@@ -64,8 +62,6 @@ def check_disk_usage(path: str) -> dict:
         "total GB": total_gb,
         "time of snapshot": time_of_snapshot
         }
-
-# TODO write test for HTML table code
 
 def create_drive_registry(drive_paths: list[str]) -> list[DriveInfo]:
     """Turn a list of drive mounting points into a list of objects store their path and storage capacity."""
