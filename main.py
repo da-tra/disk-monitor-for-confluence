@@ -87,7 +87,7 @@ def create_table_html(disk_registry: list[DriveInfo]) -> str:
 
     # define labels for the columns
     # get the labels dataclass DriveInfo's attributes
-    attributes: dict = DriveInfo.__dict__["__match_args__"]
+    attributes: dict = DriveInfo.__dataclass_fields__.keys()
     # remove "_"-separators
     table_columns = [v.replace('_', ' ') for v in attributes]
 
