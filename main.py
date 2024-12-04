@@ -81,20 +81,6 @@ def create_drive_registry(drive_paths: list[str]) -> list[DriveInfo]:
     return registry
 
 
-# TODO remove FUNs create_disk_list and create_table_html after new functions work and have been tested
-
-def create_disks_list(disk_paths: list = configuration.drive_paths) -> list[dict]:
-    """Store status of monitored disks in list of dicts."""
-    disks = []
-    for disk_path in disk_paths:
-        disk_dict = {}
-        disk_dict["path"] = disk_path
-        disk_dict["storage"] = check_disk_usage(disk_path)
-        disk_dict["time of snapshot"] = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-
-        disks.append(disk_dict)
-    return disks
-
 def create_table_html_dc(disk_registry: list[DriveInfo]) -> str:
     """Create HTML code for a table that displays the information of all disks in a list.
 
@@ -143,7 +129,6 @@ def create_table_html_dc(disk_registry: list[DriveInfo]) -> str:
     return table
 
 
-def create_table_html(drives: list[dict]) -> str:
     """Create HTML code for a table that displays the information of all disks in a list.
 
     Column labels are the keys in the dictionaries of each individual storage device.
