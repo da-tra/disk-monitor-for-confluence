@@ -224,28 +224,6 @@ def update_page_with_new_content(
 
     return request
 
-    # for debugging:
-    # # check response code from PUTting new content
-
-    # response_from_put_str = response.text
-    # print(json.dumps(json.loads(response_from_put_str), sort_keys=True, indent=4, separators=(",", ": ")))
-    # print(f"put url: {response.url}")
-    # print(f"PUT response code {response.status_code}")
-
-    # # print updated content
-    # new_get = session.get(
-    #     url=URL,
-    #     auth=authentication,
-    #     timeout=1,
-    #     params={"expand": ("body.storage", "body.version"), "body-format": "storage"},
-    # )
-    # print(f" new get code: {new_get.status_code}")
-    # new_get_data = new_get.json()
-    # # print(f"new content: {new_get_data["body"]["storage"]["value"]}")
-
-    # print(f"\n version after update: {new_get_data["version"]["number"]}")
-
-
 # import information about your Confluence page from the file configuration.py
 CONFLUENCE_PAGE_ID = configuration.confluence_page_id
 BASE_URL = configuration.confluence_base_url
