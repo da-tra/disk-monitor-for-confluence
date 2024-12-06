@@ -123,50 +123,6 @@ def create_table_html(disk_registry: list[DriveInfo]) -> str:
 
     return table
 
-
-    """Create HTML code for a table that displays the information of all disks in a list.
-
-    Column labels are the keys in the dictionaries of each individual storage device.
-    """
-    ## create HTML code for a table with disc info
-    # define an empty table
-    table = ""
-
-    # define labels for the columns
-    # get the labels from one of the drives' dictionaries
-    table_columns = drives[0].keys()
-
-    # create first table row with table column labels
-    table += "<tr>"
-    for column_name in table_columns:
-        table += "<th><p><strong>"
-        table += column_name
-        table += "</strong></p></th>"
-    table += "</tr>"
-
-    # create rows for each drive and its data
-    for drive in drives:
-        new_row = ""
-        # start row
-        new_row += "<tr>"
-        # add disk path
-        new_row += f"<td><p>{drive["path"]}</p></td>"
-        # open storage cell and fill it
-        new_row += "<td><p>"
-        new_row += f"<strong>used: {"{:.1f}".format(drive["storage"]["used %"])} % </strong> <br/>"
-        new_row += f"free: {"{:.2f}".format(drive["storage"]["free GB"])} GB<br/>"
-        new_row += f"total: {"{:.2f}".format(drive["storage"]["total GB"])} GB<br/>"
-        # close storage cell
-        new_row += "</p></td>"
-        # TODO add time stamp of update
-        # new cell for timestamp
-        new_row += f"<td> <p>{drive["storage"]["time of snapshot"]}</p></td>"
-        # finish this row
-        new_row += "</tr>"
-        table += new_row
-    # assemble the table
-    return f"<table><tbody>{table}</tbody></table>"
-
 def get_page_version(url: str) -> int:
     """Get version number of confluence page."""
     headers = {"Accept": "application/json"}
