@@ -16,7 +16,7 @@ from requests.auth import HTTPBasicAuth
 
 import configuration
 
-# TODO refactoring: store device capacity in a data class instead of a dictionary
+
 @dataclass
 class DiskUsageInfo:
     """Dataclass that stores information about a drive's storage capacity."""
@@ -33,9 +33,7 @@ class DriveInfo:
     storage: DiskUsageInfo
     time_of_snapshot: str
 
-# TODO refactoring: create function to add data to DiskUsageInfo
-
-def check_disk_usage_dc(path:str) -> DiskUsageInfo:
+def check_disk_usage(path:str) -> DiskUsageInfo:
     """Read storage capacity with shutil and create DiskUsageInfo with the data."""
     _total, _used, _free = shutil.disk_usage(path)
 
@@ -47,29 +45,13 @@ def check_disk_usage_dc(path:str) -> DiskUsageInfo:
 
     return disk_usage_info_dc
 
-def check_disk_usage(path: str) -> dict:
-    """Use package shutil to extract information about storage of a mounted drive."""
-    disk_dict = dict()
-    _total, _used, _free = shutil.disk_usage(path)
-    total_gb = _total / 2**30
-    used_percent = _used / _total * 100
-    free_gb = _free / 2**30
-    time_of_snapshot = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-
-    return {
-        "used %": used_percent,
-        "free GB": free_gb,
-        "total GB": total_gb,
-        "time of snapshot": time_of_snapshot
-        }
-
 def create_drive_registry(drive_paths: list[str]) -> list[DriveInfo]:
     """Turn a list of drive mounting points into a list of objects store their path and storage capacity."""
 
     registry = [
         DriveInfo(
             path=path, 
-            storage=check_disk_usage_dc(path),
+            storage=check_disk_usage(path),
             time_of_snapshot = datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
             ) for path in drive_paths
             ]
