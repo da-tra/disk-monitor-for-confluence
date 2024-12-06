@@ -142,14 +142,6 @@ def get_page_version(url: str) -> int:
     page_data = response.json()
     version_number = page_data["version"]["number"]
 
-    # for debugging:
-    # print(f"version number before update: {version_number}\n")
-    # response_str = response.text
-    # response_pretty = json.dumps(json.loads(response_str), indent=4)
-    # print(json.dumps(json.loads(response_str), sort_keys=True, indent=4, separators=(",", ": ")))
-    # print(f"GET url: {response.url}")
-    # print(f"GET response code: {response.status_code}")
-
     return version_number
 
 def update_page_with_new_content(
@@ -168,7 +160,7 @@ def update_page_with_new_content(
             "title": CONFLUENCE_PAGE_TITLE,
             "body": {"representation": "storage", "value": new_content},
             "version": {"number": existing_version + 1, "message": ""},
-        }
+            },
     )
     request = session.put(
         url=URL,
@@ -198,11 +190,6 @@ drives = create_drive_registry(drive_paths=configuration.drive_paths)
 
 # create an HTML table displaying information about the drives
 table = create_table_html(disk_registry=drives)
-
-# for debugging:create HTML file with table for debugging
-# from pathlib import Path
-# path = Path("table.html")
-# path.write_text(table)
 
 # get page version, needed for the put request that updates the confluence page
 version_number_before_update = get_page_version(URL)
