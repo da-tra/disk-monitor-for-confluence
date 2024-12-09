@@ -126,8 +126,9 @@ If any of the drives exceeds a defined capacity, a notification email is sent.
 >
 >
 >/path1: 25.00 %
+
 >/path2: 20.00 %
-'''
+
 
 ## Program logic
 1. Establish a session via the HTTP library Requests
