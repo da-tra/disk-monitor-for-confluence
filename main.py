@@ -181,5 +181,7 @@ update_page_with_new_content(
     new_content=table,
     existing_version=version_number_before_update)
 
+# TODO implement email notification
+
 # #TODO implement logging
 # #TODO implement SQL recording of storage device status
