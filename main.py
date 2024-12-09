@@ -230,13 +230,12 @@ update_page_with_new_content(
     new_content=table,
     existing_version=version_number_before_update)
 
-# TODO implement email notification
 ########## Email notification ########
 
 warnings_count, warning_content = check_for_critical_capacity(
     capacity_limit=configuration.capacity_limit,
     disk_registry=drives,
-)
+    )
 
 if warnings_count > 0:
     send_warning_email(
