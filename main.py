@@ -14,7 +14,6 @@ from dataclasses import dataclass
 from datetime import datetime
 from email.message import EmailMessage
 
-
 import requests
 from requests.auth import HTTPBasicAuth
 
