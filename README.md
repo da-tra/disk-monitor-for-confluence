@@ -126,7 +126,7 @@ If any of the drives exceeds a defined capacity, a notification email is sent.
 >
 >
 >/path1: 25.00 %
-
+>
 >/path2: 20.00 %
 
 
