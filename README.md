@@ -118,16 +118,15 @@ If any of the drives exceeds a defined capacity, a notification email is sent.
  </table>
 
 ### Example email content
-'''
-Dear user,
-
-this is an automated notification email, please do not respond to it.
-
-The following drives have exceeded 10 % of storage use:
-
-
-/path1: 25.00 %
-/path2: 20.00 %
+>Dear user,
+>
+>this is an automated notification email, please do not respond to it.
+>
+>The following drives have exceeded 10 % of storage use:
+>
+>
+>/path1: 25.00 %
+>/path2: 20.00 %
 '''
 
 ## Program logic
