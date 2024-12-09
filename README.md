@@ -105,8 +105,8 @@ If any of the drives exceeds a defined capacity, a notification email is sent.
       </td>
       <td>
        <p>
-          <strong>used: 20.0 % </strong> <br/>
-          free: 0.80 GB<br/>
+          <strong>used: 91.0 % </strong> <br/>
+          free: 0.09 GB<br/>
           total: 1.00 GB<br/>
         </p>
       </td>
@@ -124,12 +124,9 @@ If any of the drives exceeds a defined capacity, a notification email is sent.
 >
 >this is an automated notification email, please do not respond to it.
 >
->The following drives have exceeded 10 % of storage use:
+>The following drives have exceeded 90 % of storage use:
 >
->
->/path1: 25.00 %
->
->/path2: 20.00 %
+>/path2: 91.00 %
 
 
 ## Program logic
