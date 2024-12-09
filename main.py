@@ -178,7 +178,7 @@ def send_warning_email(warnings_count: int, capacity_limit: float, warning_text:
         subject = f"Attention: {warnings_count} drives are approaching capacity limit"
     body = "Dear user,\n\n"
     body += "this is an automated notification email, please do not respond to it.\n\n"
-    body += f"The following drives have exceeded {capacity_limit} % of storage use  :\n\n"
+    body += f"The following drives have exceeded {capacity_limit} % of storage use:\n\n"
     body += f"{warning_text}"
 
     em = EmailMessage()

@@ -6,7 +6,7 @@ Disk Monitor for Confluence - A tool for displaying capacity of mounted storage 
 
 ## Requirements
 
-* Python >= 3.11
+* Python >= 3.12
 * [Confluence](https://www.atlassian.com/de/software/confluence) account + API key
 * Confluence page (content gets overwritten)
 
@@ -38,11 +38,25 @@ drive_paths = [
     "/path1",
     "/path2",
     ]
+
+# Store the credentials for the email address that sends a notification
+# when a drive has reached a certain capacity (90%, for instance)
+email_sender = "email@gmail.com"
+email_2fa = "aaaabbbbccccdddd" # remove all spaces
+
+# Store the receiving email address
+email_recipient = "another.email@gmail.com"
+
+# Define the threshold capacity at which a warning is issued in percent (0-100)
+capacity_limit: int = 90
 ```
 
 Disk Monitor for Confluence extracts information about storage device capacity and writes them to the defined Confluence page, including a timestamp.
 
+If any of the drives exceeds a defined capacity, a notification email is sent.
+
 ### Example output
+
 <table>
   <tbody>
     <tr>
@@ -102,6 +116,19 @@ Disk Monitor for Confluence extracts information about storage device capacity a
     </tr>
   </tbody>
  </table>
+
+### Example email content
+'''
+Dear user,
+
+this is an automated notification email, please do not respond to it.
+
+The following drives have exceeded 10 % of storage use:
+
+
+/path1: 25.00 %
+/path2: 20.00 %
+'''
 
 ## Program logic
 1. Establish a session via the HTTP library Requests
