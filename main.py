@@ -167,6 +167,37 @@ def check_for_critical_capacity(
             warning_content += f"\n{drive.path}: {drive.storage.used_percent:.2f} %"
     return warnings_count, warning_content
 
+def send_warning_email(warnings_count: int, capacity_limit: float, warning_text: str) -> None:
+    """Send an email that warns the user if a drive exceeds a certain capacity."""
+    if warnings_count == 1:
+        subject = f"Attention: {warnings_count} drive is approaching capacity limit"
+    else:
+        subject = f"Attention: {warnings_count} drives are approaching capacity limit"
+    body = "Dear user,\n\n"
+    body += "this is an automated notification email, please do not respond to it.\n\n"
+    body += f"The following drives have exceeded {capacity_limit} % of storage use  :\n\n"
+    body += f"{warning_text}"
+
+    em = EmailMessage()
+    em["From"] = configuration.email_sender
+    em["To"] = configuration.email_recipient
+    em["Subject"] = subject
+    em.set_content(body)
+
+    context = ssl.create_default_context()
+
+    with smtplib.SMTP_SSL(host="smtp.gmail.com", port=465, context=context) as smtp:
+        smtp.login(
+            configuration.email_sender,
+            configuration.email_2fa,
+        )
+        smtp.sendmail(
+            from_addr=configuration.email_sender,
+            to_addrs=configuration.email_recipient,
+            msg=em.as_string(),
+        )
+
+
 ####### Confluence page  update ######
 
 # import information about your Confluence page from the file configuration.py
