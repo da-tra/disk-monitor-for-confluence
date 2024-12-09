@@ -233,6 +233,18 @@ update_page_with_new_content(
 # TODO implement email notification
 ########## Email notification ########
 
+warnings_count, warning_content = check_for_critical_capacity(
+    capacity_limit=configuration.capacity_limit,
+    disk_registry=drives,
+)
+
+if warnings_count > 0:
+    send_warning_email(
+        warnings_count=warnings_count,
+        capacity_limit=configuration.capacity_limit,
+        warning_text=warning_content,
+    )
+
 
 # #TODO implement logging
 # #TODO implement SQL recording of storage device status
