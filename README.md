@@ -1,6 +1,6 @@
 # Disk Monitor for Confluence
 
-Disk Monitor for Confluence - A tool for displaying capacity of mounted storage devices on a Conluence page.
+Disk Monitor for Confluence - A tool for displaying capacity of mounted storage devices on a Conluence page and warning via mail if a capacity limit is reached.
 
 > WARNING: This project is in an early stage of development and should be used with caution.
 
@@ -12,7 +12,13 @@ Disk Monitor for Confluence - A tool for displaying capacity of mounted storage 
 
 ## Usage
 
-Disk Monitor for Confluence reads a user-created file `configuration.py`, which stores credentials for a Confluence page, a Confluence user and their API key, as well as a list of the storages devices to be monitored. The storage devices are identified via their mounted file paths.
+Disk Monitor for Confluence reads a user-created file `configuration.py`, which stores: 
+* credentials for a Confluence page
+* a Confluence user and their API key
+* a list of the storages devices to be monitored (identified via their file paths when mounted)
+* credentials for a Gmail address that sends notification mails:
+  * email address
+  * 2-Step Verification code (turn on 2FA [here](https://support.google.com/accounts/answer/185839?hl=en&co=GENIE.Platform%3DDesktop) and get the code [here](https://myaccount.google.com/apppasswords))
 
 #### Example config:
 ```python
