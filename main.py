@@ -9,6 +9,7 @@ configuration.py, which needs to be created by the user. For instructions refer 
 import json
 import shutil
 import smtplib
+import ssl
 from dataclasses import dataclass
 from datetime import datetime
 from email.message import EmailMessage
