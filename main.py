@@ -154,6 +154,8 @@ def update_page_with_new_content(
 
     return request
 
+####### Confluence page  update ######
+
 # import information about your Confluence page from the file configuration.py
 CONFLUENCE_PAGE_ID = configuration.confluence_page_id
 BASE_URL = configuration.confluence_base_url
@@ -182,6 +184,8 @@ update_page_with_new_content(
     existing_version=version_number_before_update)
 
 # TODO implement email notification
+########## Email notification ########
+
 
 # #TODO implement logging
 # #TODO implement SQL recording of storage device status
