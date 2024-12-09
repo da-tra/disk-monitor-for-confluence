@@ -8,8 +8,11 @@ configuration.py, which needs to be created by the user. For instructions refer 
 
 import json
 import shutil
+import smtplib
 from dataclasses import dataclass
 from datetime import datetime
+from email.message import EmailMessage
+
 
 import requests
 from requests.auth import HTTPBasicAuth
