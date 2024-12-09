@@ -154,6 +154,19 @@ def update_page_with_new_content(
 
     return request
 
+def check_for_critical_capacity(
+    capacity_limit: float,
+    disk_registry: list[DriveInfo],
+    ) -> tuple[int, str]:
+    """Check if a list of drives contains one that exceeds the capacity limit."""
+    warning_content = ""
+    warnings_count = 0
+    for drive in disk_registry:
+        if drive.storage.used_percent > capacity_limit:
+            warnings_count += 1
+            warning_content += f"\n{drive.path}: {drive.storage.used_percent:.2f} %"
+    return warnings_count, warning_content
+
 ####### Confluence page  update ######
 
 # import information about your Confluence page from the file configuration.py
