@@ -74,12 +74,12 @@ def create_table_html(disk_registry: list[DriveInfo]) -> str:
     # get the labels dataclass DriveInfo's attributes
     attributes: dict = DriveInfo.__dataclass_fields__.keys()
     # remove "_"-separators
-    table_columns = [v.replace('_', ' ') for v in attributes]
+    table_columns_html = [v.replace('_', ' ') for v in attributes]
 
 
     # create first table row with table column labels
     table += "<tr>"
-    for column_name in table_columns:
+    for column_name in table_columns_html:
         table += "<th><p><strong>"
         table += column_name
         table += "</strong></p></th>"
@@ -230,7 +230,7 @@ update_page_with_new_content(
     new_content=table,
     existing_version=version_number_before_update)
 
-########## Email notification ########
+ ########## Email notification ##########
 
 warnings_count, warning_content = check_for_critical_capacity(
     capacity_limit=configuration.capacity_limit,
