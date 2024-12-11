@@ -25,6 +25,7 @@ try:
 
     sql_create_command = "CREATE TABLE "  # start the command
     sql_create_command += f"{sql_table_name} "  # add table name
+    sql_create_command += "(id INTEGER, "  # add column for key
 
     # create list of tuples: (column_name, type)
     sql_columns: list[tuple[str, str]] = [
@@ -33,11 +34,12 @@ try:
         ("free_gb", "REAL"),
         ("total_gb", "REAL"),
         ("snapshot_time", "TEXT"),
-    ]
+        ]
 
-    # Join the tuples pairs in the list to a comma separated string
+    # 1) Join the tuples pairs in the list to a comma separated string
+    # 2) Declare the primary key
     sql_columns_table = [f"{pair[0]} {pair[1]}" for pair in sql_columns]
-    sql_columns_table = f"({", ".join(sql_columns_table)})"
+    sql_columns_table = f"{", ".join(sql_columns_table)}, PRIMARY KEY (id))"
 
     sql_create_command += sql_columns_table  # join all elements of the command
     # print(sql_create_command)
