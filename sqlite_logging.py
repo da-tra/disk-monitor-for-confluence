@@ -4,6 +4,9 @@ from datetime import datetime
 
 import main
 
+# TODO refactor as function or functions called in main
+# TODO write docstring
+
 drives: list[main.DriveInfo] = main.drives
 
 # Establish a connection to the database file.
