@@ -141,11 +141,11 @@ All data is logged in an SQLite database.
 >/path2: 91.00 %
 
 ### Example SQLite output
-> id   path   free_percent  used_gb  total_gb        snapshot_time
+> id    path  free_percent  used_gb  total_gb        snapshot_time
 >
->  1   path1         25.00   100.00    400.00  2024-11-22 14:12:56
+>  1    path1        25.00   100.00    400.00  2024-11-22 14:12:56
 >
->  2   path2         91.00     0.09      1.00  2024-11-22 14:12:56
+>  2    path2        91.00     0.09      1.00  2024-11-22 14:12:56
 
 ## Program logic
 1. Establish a session via the HTTP library Requests
