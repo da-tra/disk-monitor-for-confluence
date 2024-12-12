@@ -23,6 +23,9 @@ def sql_command_create_table(
     ) -> str:
     """# Construct an SQL command CREATE TABLE.
 
+    The command has the following structure:
+    'CREATE TABLE table_name (id, INTEGER, column1 COLUMNTYPE, column2 COLUMNTYPE, ..., PRIMARY KEY (id))'
+
     The command has the following column labels and types:
     ("path", "TEXT"),
     ("used_percent", "REAL"),
@@ -52,18 +55,8 @@ def sql_command_create_table(
 
     sql_create_command += sql_columns_table  # join all elements of the command
     # print(sql_create_command)
-    
-# Create a table if it doesn't already exist.
-# Otherwise the SQL command CREATE will be skipped.
-try:
-    # 'CREATE TABLE table_name (column1 COLUMNTYPE, column2 COLUMNTYPE, ...)'
-    
-    cur.execute(sql_create_command)  # execute and commit to database
-    conn.commit()
-except sqlite3.OperationalError:
-    # Do nothing if the table already exists
-    pass
 
+    return sql_create_command
 
 # Add rows of data to the table
 # example:
