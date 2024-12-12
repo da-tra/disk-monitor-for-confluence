@@ -244,15 +244,12 @@ cur = conn.cursor()
 # TODO function to create a table if it doesn't already exist.
 # variables: name of db, table name,
 # return: sql command
-sql_create_table_command = sqlite_logging.sql_command_create_table(
-    db_filename=configuration.db_filename,
-    table_name=configuration.db_table_name,
-    )
+sql_create_table_command = sqlite_logging.sql_command_create_table(db_filename=configuration.db_filename, table_name=configuration.db_table_name)
 
 # Create a table if it doesn't already exist.
 # Otherwise the SQL command CREATE will be skipped.
 try:
-    cur.execute(sql_create_command)  # execute and commit to database
+    cur.execute(sql_create_table_command)  # execute and commit to database
     conn.commit()
 except sqlite3.OperationalError:
     # Do nothing if the table already exists
