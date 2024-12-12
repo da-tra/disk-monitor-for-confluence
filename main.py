@@ -234,9 +234,19 @@ update_page_with_new_content(
 
 ########## SQLite logging #########
 
+# Define data to be logged by defining tuples(column_name, type)
+sql_columns: list[tuple[str, str]] = [
+    ("path", "TEXT"),
+    ("used_percent", "REAL"),
+    ("free_gb", "REAL"),
+    ("total_gb", "REAL"),
+    ("snapshot_time", "TEXT"),
+    ]
+
 # Establish a connection to the database file.
 # If it doesn't exist, it will be created.
-conn = sqlite3.connect(configuration.db_filename)
+db_filename = configuration.db_filename
+conn = sqlite3.connect(db_filename)
 
 # Create a cursor
 cur = conn.cursor()
@@ -244,7 +254,10 @@ cur = conn.cursor()
 # TODO function to create a table if it doesn't already exist.
 # variables: name of db, table name,
 # return: sql command
-sql_create_table_command = sqlite_logging.sql_command_create_table(db_filename=configuration.db_filename, table_name=configuration.db_table_name)
+sql_create_table_command = sqlite_logging.sql_command_create_table(
+    table_name=configuration.db_table_name,
+    sql_columns=sql_columns,
+    )
 
 # Create a table if it doesn't already exist.
 # Otherwise the SQL command CREATE will be skipped.
@@ -258,6 +271,18 @@ except sqlite3.OperationalError:
 
 # TODO function to send data to the table
 # variables: table name, list of drives
+for drive in drives:
+    sql_insert_command = sqlite_logging.sql_create_row(
+        table_name=configuration.db_table_name,
+        disk=drive,
+        sql_columns=sql_columns,
+        )
+
+    # Execute the command and submit to the SQLite database
+    cur.execute(sql_insert_command)
+    conn.commit()
+# Close the connection to the database
+conn.close()
 
 ########## Email notification ##########
 
