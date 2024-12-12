@@ -234,7 +234,13 @@ update_page_with_new_content(
 
 ########## SQLite logging #########
 
-# Define data to be logged by defining tuples(column_name, type)
+# Add rows of data to the table
+# example:
+# id   path   free_percent  used_gb  total_gb        snapshot_time
+#  1   path1         25.00   100.00    400.00  2024-11-22 14:12:56
+#  2   path2         91.00     0.09      1.00  2024-11-22 14:12:56
+
+# Define the database columns by defining tuples(column_name, sqlite_type)
 sql_columns: list[tuple[str, str]] = [
     ("path", "TEXT"),
     ("used_percent", "REAL"),
@@ -251,16 +257,15 @@ conn = sqlite3.connect(db_filename)
 # Create a cursor
 cur = conn.cursor()
 
-# TODO function to create a table if it doesn't already exist.
-# variables: name of db, table name,
-# return: sql command
-sql_create_table_command = sqlite_logging.sql_command_create_table(
-    table_name=configuration.db_table_name,
-    sql_columns=sql_columns,
-    )
 
 # Create a table if it doesn't already exist.
-# Otherwise the SQL command CREATE will be skipped.
+db_table_name = configuration.db_table_name # Get table name from configuration.py
+
+sql_create_table_command = sqlite_logging.sql_command_create_table(  # create INSERT command string
+    table_name=db_table_name,
+    sql_columns=sql_columns,
+)
+
 try:
     cur.execute(sql_create_table_command)  # execute and commit to database
     conn.commit()
@@ -268,10 +273,10 @@ except sqlite3.OperationalError:
     # Do nothing if the table already exists
     pass
 
-
-# TODO function to send data to the table
-# variables: table name, list of drives
+# For each drive, send one row of data to the SQLite database
 for drive in drives:
+    # Generate an SQL command to INSERT the relevant data
+    #
     sql_insert_command = sqlite_logging.sql_create_row(
         table_name=configuration.db_table_name,
         disk=drive,

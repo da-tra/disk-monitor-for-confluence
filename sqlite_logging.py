@@ -1,23 +1,17 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-# TODO write docstrings
+# TODO write module docstring
+# TODO update readme, including example sql tables (get them from old commits, in code comments)
 
 def sql_command_create_table(
     table_name:str,
     sql_columns:list[tuple],
     ) -> str:
-    """# Construct an SQL command CREATE TABLE.
+    """Construct an SQL command CREATE TABLE.
 
     The command has the following structure:
-    'CREATE TABLE table_name (id, INTEGER, column1 COLUMNTYPE, column2 COLUMNTYPE, ..., PRIMARY KEY (id))'
-
-    The command has the following column labels and types:
-    ("path", "TEXT"),
-    ("used_percent", "REAL"),
-    ("free_gb", "REAL"),
-    ("total_gb", "REAL"),
-    ("snapshot_time", "TEXT"),
+    'CREATE TABLE table_name (id INTEGER, column1 COLUMNTYPE, column2 COLUMNTYPE, ..., PRIMARY KEY (id))'
     """
     sql_create_command = "CREATE TABLE "  # start the command
     sql_create_command += f"{table_name} "  # add table name
@@ -37,15 +31,11 @@ def sql_create_row(
     disk:dataclass,
     sql_columns:list[tuple],
     ) -> str:
-    # Add rows of data to the table
-    # example:
-    # path      free_percent    used_gb     total_gb    snapshot_day    snapshot_time
-    # path1            25.00     100.00       400.00        20241122           141256
-    # path2            91.00       0.09         1.00        20241122           141256
+    """Construct an SQL command to  INSERT values from input sql_columns.
 
-    # Construct an SQL command INSERT of the following structure:
-    # 'INSERT INTO table_name (column1, column2, ...) values ("cell1", "cell2", ...)'
-
+    Command structure:
+    'INSERT INTO table_name (column1, column2, ...) values ("cell1", "cell2", ...)'
+    """
     # Start constucting the command
     sql_insert_command = f"INSERT INTO {table_name} "
 
@@ -60,11 +50,12 @@ def sql_create_row(
         disk.storage.free_gb,
         disk.storage.total_gb,
         datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    ]
+        ]
 
     # Join the data entries to a comma separated string
     sql_content_insert = ", ".join(f'"{w}"' for w in sql_content_insert)
 
+    # Assemble the entire INSERT command
     sql_insert_command += f"({sql_column_insert}) "
     sql_insert_command += f"values ({sql_content_insert})"
 
