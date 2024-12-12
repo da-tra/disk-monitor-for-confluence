@@ -9,6 +9,7 @@ import main
 
 drives: list[main.DriveInfo] = main.drives
 
+
 # Establish a connection to the database file.
 # If it doesn't exist, it will be created.
 conn = sqlite3.connect(configuration.db_filename)
@@ -16,11 +17,19 @@ conn = sqlite3.connect(configuration.db_filename)
 # Create a cursor
 cur = conn.cursor()
 
-# Create a table if it doesn't already exist.
-# Otherwise the SQL command CREATE will be skipped.
-try:
-    # Construct an SQL command CREATE TABLE  of the following structure:
-    # 'CREATE TABLE table_name (column1 COLUMNTYPE, column2 COLUMNTYPE, ...)'
+def sql_command_create_table(
+    db_name:str,
+    table_name:str,
+    ) -> str:
+    """# Construct an SQL command CREATE TABLE.
+
+    The command has the following column labels and types:
+    ("path", "TEXT"),
+    ("used_percent", "REAL"),
+    ("free_gb", "REAL"),
+    ("total_gb", "REAL"),
+    ("snapshot_time", "TEXT"),
+    """
     sql_table_name = configuration.db_table_name  # get the table name
 
     sql_create_command = "CREATE TABLE "  # start the command
@@ -43,6 +52,12 @@ try:
 
     sql_create_command += sql_columns_table  # join all elements of the command
     # print(sql_create_command)
+    
+# Create a table if it doesn't already exist.
+# Otherwise the SQL command CREATE will be skipped.
+try:
+    # 'CREATE TABLE table_name (column1 COLUMNTYPE, column2 COLUMNTYPE, ...)'
+    
     cur.execute(sql_create_command)  # execute and commit to database
     conn.commit()
 except sqlite3.OperationalError:

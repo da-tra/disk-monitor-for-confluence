@@ -242,10 +242,11 @@ conn = sqlite3.connect(configuration.db_filename)
 cur = conn.cursor()
 
 # TODO function to create a table if it doesn't already exist.
-# variables: name of db, table name
+# variables: name of db, table name,
+# return: sql command
 
 # TODO function to send data to the table
-# variables: table name
+# variables: table name, list of drives
 
 ########## Email notification ##########
 
