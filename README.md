@@ -141,10 +141,10 @@ All data is logged in an SQLite database.
 >/path2: 91.00 %
 
 ### Example SQLite output
-| id | path  | used_percent     | free_gb           | total_gb          | snapshot_time       |
-|----|-------|------------------|-------------------|-------------------|---------------------|
-| 1  | /     | 4.00             | 212.832813262939  | 455.585792541504  | 2024-12-12 13:53:55 |
-| 2  | /boot | 15.6012185286687 | 0.842323303222656 | 0.998027801513672 | 2024-12-12 13:53:55 |
+| id | path  | used_percent     | free_gb   | total_gb     | snapshot_time       |
+|----|-------|------------------|-----------|--------------|---------------------|
+| 1  | /     |            25.00 |    100.00 |       400.00 | 22-11-2024 14:12:56 |
+| 2  | /boot |            91.00 |      0.09 |         1.00 | 22-11-2024 14:12:56 |
 
 ## Program logic
 1. Establish a session via the HTTP library Requests
