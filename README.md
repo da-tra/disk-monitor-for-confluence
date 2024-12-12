@@ -1,6 +1,9 @@
 # Disk Monitor for Confluence
 
-Disk Monitor for Confluence - A tool for displaying capacity of mounted storage devices on a Conluence page and warning via mail if a capacity limit is reached.
+Disk Monitor for Confluence - A tool for displaying capacity of mounted storage devices on a [Confluence](https://www.atlassian.com/de/software/confluence) page and warning via mail if a capacity limit is reached. Also features logging in a local
+
+
+ SQLite database.
 
 > WARNING: This project is in an early stage of development and should be used with caution.
 
@@ -11,6 +14,7 @@ Disk Monitor for Confluence - A tool for displaying capacity of mounted storage 
 * [Requests](https://pypi.org/project/requests/)
 * [Confluence](https://www.atlassian.com/de/software/confluence) account + API key
 * Confluence page (content gets overwritten)
+* SQLite
 
 ## Usage
 
@@ -21,6 +25,7 @@ Disk Monitor for Confluence reads a user-created file `configuration.py`, which 
 * credentials for a Gmail address that sends notification mails:
   * email address
   * 2-Step Verification code (turn on 2FA [here](https://support.google.com/accounts/answer/185839?hl=en&co=GENIE.Platform%3DDesktop) and get the code [here](https://myaccount.google.com/apppasswords))
+* a filename to be used for an SQLite database and the name for a table
 
 #### Example config:
 ```python
@@ -51,13 +56,20 @@ email_recipient = "another.email@gmail.com"
 
 # Define the threshold capacity at which a warning is issued in percent (0-100)
 capacity_limit: int = 90
+
+# Define a filename for the SQLite database where information about storage will
+# be logged. If the file doesn't already exist, it will be created.
+db_filename = "a_filename.sqlite"
+db_table_name = "a_table"
 ```
 
 Disk Monitor for Confluence extracts information about storage device capacity and writes them to the defined Confluence page, including a timestamp.
 
 If any of the drives exceeds a defined capacity, a notification email is sent.
 
-### Example output
+All data is logged in an SQLite database.
+
+### Example table on Confluence page
 
 <table>
   <tbody>
@@ -128,6 +140,10 @@ If any of the drives exceeds a defined capacity, a notification email is sent.
 >
 >/path2: 91.00 %
 
+### Example SQLite output
+> id   path   free_percent  used_gb  total_gb        snapshot_time
+>  1   path1         25.00   100.00    400.00  2024-11-22 14:12:56
+>  2   path2         91.00     0.09      1.00  2024-11-22 14:12:56
 
 ## Program logic
 1. Establish a session via the HTTP library Requests
@@ -135,3 +151,5 @@ If any of the drives exceeds a defined capacity, a notification email is sent.
 3. Create HTML code to display the information
 4. GET the version number of the eixisting Confluence page Requests
 5. PUT the HTML table on the Confluence page
+6. Log the same data to a local SQLite database
+7. Send email to specified address, if a certain capacity of >= 1 drive has been exceeded
