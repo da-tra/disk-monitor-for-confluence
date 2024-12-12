@@ -60,7 +60,7 @@ for disk in drives:
     # 'INSERT INTO table_name (column1, column2, ...) values ("cell1", "cell2", ...)'
 
     # Start constucting the command
-    sql_insert_command = f"INSERT INTO {sql_table_name} "
+    sql_insert_command = f"INSERT INTO {configuration.db_table_name} "
 
     # Join column names into a comma separated string
     sql_column_insert = [pair[0] for pair in sql_columns]

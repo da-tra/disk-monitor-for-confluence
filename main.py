@@ -9,6 +9,7 @@ configuration.py, which needs to be created by the user. For instructions refer 
 import json
 import shutil
 import smtplib
+import sqlite3
 import ssl
 from dataclasses import dataclass
 from datetime import datetime
@@ -18,6 +19,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 import configuration
+import sqlite_logging
 
 
 @dataclass
@@ -230,7 +232,22 @@ update_page_with_new_content(
     new_content=table,
     existing_version=version_number_before_update)
 
- ########## Email notification ##########
+########## SQLite logging #########
+
+# Establish a connection to the database file.
+# If it doesn't exist, it will be created.
+conn = sqlite3.connect(configuration.db_filename)
+
+# Create a cursor
+cur = conn.cursor()
+
+# TODO function to create a table if it doesn't already exist.
+# variables: name of db, table name
+
+# TODO function to send data to the table
+# variables: table name
+
+########## Email notification ##########
 
 warnings_count, warning_content = check_for_critical_capacity(
     capacity_limit=configuration.capacity_limit,
@@ -243,7 +260,3 @@ if warnings_count > 0:
         capacity_limit=configuration.capacity_limit,
         warning_text=warning_content,
     )
-
-
-# #TODO implement logging
-# #TODO implement SQL recording of storage device status
