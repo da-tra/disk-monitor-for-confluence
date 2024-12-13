@@ -269,7 +269,7 @@ db_table_name = configuration.db_table_name # Get table name from configuration.
 sql_create_table_command = sqlite_logging.sql_command_create_table(  # create INSERT command string
     table_name=db_table_name,
     sql_columns=sql_columns,
-)
+    )
 
 try:
     cur.execute(sql_create_table_command)  # execute and commit to database
@@ -281,7 +281,6 @@ except sqlite3.OperationalError:
 # For each drive, send one row of data to the SQLite database
 for drive in drives:
     # Generate an SQL command to INSERT the relevant data
-    #
     sql_insert_command = sqlite_logging.sql_create_row(
         table_name=configuration.db_table_name,
         disk=drive,
@@ -298,12 +297,13 @@ conn.close()
 # Email notification #
 ######################
 
-
+# Check for warnings and count them
 warnings_count, warning_content = check_for_critical_capacity(
     capacity_limit=configuration.capacity_limit,
     disk_registry=drives,
     )
 
+# If there are any warnings, send a notification email to the address specified in configuration.py
 if warnings_count > 0:
     send_warning_email(
         warnings_count=warnings_count,
