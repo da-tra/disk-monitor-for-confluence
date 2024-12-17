@@ -14,6 +14,8 @@ Disk Monitor for Confluence - A tool for displaying capacity of mounted storage 
 * [Confluence](https://www.atlassian.com/de/software/confluence) account + API key
 * Confluence page (content gets overwritten)
 
+The dependencies are managed with Python [Poetry](https://python-poetry.org/).
+
 ## Usage
 
 Disk Monitor for Confluence reads a user-created file `configuration.py`, which stores: 
@@ -24,6 +26,7 @@ Disk Monitor for Confluence reads a user-created file `configuration.py`, which 
   * email address
   * 2-Step Verification code (turn on 2FA [here](https://support.google.com/accounts/answer/185839?hl=en&co=GENIE.Platform%3DDesktop) and get the code [here](https://myaccount.google.com/apppasswords))
 * a filename to be used for an SQLite database and the name for a table
+
 
 #### Example config:
 ```python
