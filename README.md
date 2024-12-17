@@ -10,11 +10,9 @@ Disk Monitor for Confluence - A tool for displaying capacity of mounted storage 
 ## Requirements
 
 * Python >= 3.12
-* smtplib
 * [Requests](https://pypi.org/project/requests/)
 * [Confluence](https://www.atlassian.com/de/software/confluence) account + API key
 * Confluence page (content gets overwritten)
-* SQLite
 
 ## Usage
 
