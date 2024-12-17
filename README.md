@@ -14,7 +14,7 @@ Disk Monitor for Confluence - A tool for displaying capacity of mounted storage 
 * [Confluence](https://www.atlassian.com/de/software/confluence) account + API key
 * Confluence page (content gets overwritten)
 
-The dependencies are managed with Python [Poetry](https://python-poetry.org/).
+The dependencies are managed with [Python Poetry](https://python-poetry.org/).
 
 ## Usage
 
